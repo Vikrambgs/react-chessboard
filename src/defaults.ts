@@ -64,8 +64,19 @@ export const defaultDraggingPieceGhostStyle: React.CSSProperties = {
 };
 
 export const defaultArrowOptions = {
+  colors: {
+    default: '#ffaa00',
+    shift: '#4caf50',
+    ctrl: '#f44336',
+    alt: '#9c27b0',
+    meta: '#fbbf24',
+  },
+  // TODO: remove support for legacy arrow color props in future breaking version
+  /** @deprecated Use `colors.default` instead */
   color: '#ffaa00', // color if no modifiers are held down when drawing an arrow
+  /** @deprecated Use `colors.shift` instead */
   secondaryColor: '#4caf50', // color if shift is held down when drawing an arrow
+  /** @deprecated Use `colors.ctrl` instead */
   tertiaryColor: '#f44336', // color if control is held down when drawing an arrow
   arrowLengthReducerDenominator: 8, // the lower the denominator, the greater the arrow length reduction (e.g. 8 = 1/8 of a square width removed, 4 = 1/4 of a square width removed)
   sameTargetArrowLengthReducerDenominator: 4, // as above but for arrows targeting the same square (a greater reduction is used to avoid overlaps)

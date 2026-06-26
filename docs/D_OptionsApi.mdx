@@ -230,15 +230,15 @@ Controls the appearance and behavior of arrows on the board. This includes setti
 
 #### Arrow colors
 
-- `color`: Sets the default arrow color when no modifiers are held down when drawing an arrow
-- `secondaryColor`: Sets the arrow color when shift is held down when drawing an arrow
-- `tertiaryColor`: Sets the arrow color when control is held down when drawing an arrow
+- `colors.default`: Sets the default arrow color when no modifiers are held down when drawing an arrow
+- `colors.shift`: Sets the arrow color when shift is held down when drawing an arrow
+- `colors.ctrl`: Sets the arrow color when control is held down when drawing an arrow
+- `colors.alt`: Sets the arrow color when alt is held down when drawing an arrow
+- `colors.meta`: Sets the arrow color when meta (Windows/Cmd) is held down when drawing an arrow
 
-When drawing an arrow, you can hold down modifier keys to change the arrow color:
+When drawing an arrow, you can hold down modifier keys to change the arrow color. The precedence from highest to lowest is: Alt > Shift > Control > Meta > Default.
 
-- Hold Shift to use `secondaryColor`
-- Hold Control to use `tertiaryColor`
-- If both Shift and Control are held down, Shift takes precedence
+> **Note regarding the `meta` key:** On Windows, the `meta` key maps to the Windows key. Browsers cannot prevent the OS from opening the Start menu when the Windows key is released. While you can still safely map a color to `meta` (it will draw the arrow), be aware that the Start menu will still open on release. This modifier is primarily most useful for macOS users where it maps to the `Command` key.
 
 #### Arrow length
 
@@ -260,9 +260,13 @@ When drawing an arrow, you can hold down modifier keys to change the arrow color
 
 ```tsx
 {
-  color: "#ffaa00", // yellow
-  secondaryColor: "#4caf50", // green
-  tertiaryColor: "#f44336", // red
+  colors: {
+    default: "#ffaa00", // yellow
+    shift: "#4caf50", // green
+    ctrl: "#f44336", // red
+    alt: "#9c27b0", // purple
+    meta: "#fbbf24", // amber/yellowish
+  },
   arrowLengthReducerDenominator: 8,
   sameTargetArrowLengthReducerDenominator: 4,
   arrowWidthDenominator: 5,
@@ -277,9 +281,13 @@ When drawing an arrow, you can hold down modifier keys to change the arrow color
 
 ```typescript
 {
-  color: string,
-  secondaryColor: string,
-  tertiaryColor: string,
+  colors?: {
+    default?: string;
+    shift?: string;
+    ctrl?: string;
+    alt?: string;
+    meta?: string;
+  },
   arrowLengthReducerDenominator: number,
   sameTargetArrowLengthReducerDenominator: number,
   arrowWidthDenominator: number,

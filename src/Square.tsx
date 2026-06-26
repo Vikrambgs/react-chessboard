@@ -171,6 +171,8 @@ export const Square = memo(function Square({
             drawArrow(squareId, {
               shiftKey: e.shiftKey,
               ctrlKey: e.ctrlKey,
+              altKey: e.altKey,
+              metaKey: e.metaKey,
             });
           } else if (newArrowStartSquare === squareId) {
             // right clicked the same square - clear the arrow start square
@@ -197,6 +199,8 @@ export const Square = memo(function Square({
           setNewArrowOverSquare(squareId, {
             shiftKey: e.shiftKey,
             ctrlKey: e.ctrlKey,
+            altKey: e.altKey,
+            metaKey: e.metaKey,
           });
         } else if (newArrowStartSquare === squareId) {
           // hovering back over the starting square - clear the over square
