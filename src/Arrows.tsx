@@ -19,7 +19,10 @@ export function Arrows() {
   const viewBoxWidth = 2048;
   const viewBoxHeight = viewBoxWidth * (chessboardRows / chessboardColumns);
 
+  const liveDrawArrow = arrowOptions.liveDrawArrow ?? true;
+
   const currentlyDrawingArrow =
+    liveDrawArrow &&
     newArrowStartSquare &&
     newArrowOverSquare &&
     newArrowStartSquare !== newArrowOverSquare.square
