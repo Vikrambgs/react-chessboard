@@ -16,9 +16,16 @@ export const ArrowOptions: Story = {
   render: () => {
     // default arrow settings
     const defaultArrowOptions = {
+      colors: {
+        default: '#ffaa00',
+        shift: '#4caf50',
+        ctrl: '#f44336',
+        alt: '#9c27b0',
+        meta: '#fbbf24',
+      },
       color: '#ffaa00',
-      secondaryColor: '#ffaa00',
-      tertiaryColor: '#000000',
+      secondaryColor: '#4caf50',
+      tertiaryColor: '#f44336',
       arrowLengthReducerDenominator: 8,
       sameTargetArrowLengthReducerDenominator: 4,
       arrowWidthDenominator: 5,
@@ -68,37 +75,66 @@ export const ArrowOptions: Story = {
         >
           {/* Colors */}
           <div>
-            <label>Primary Color:</label>
+            <label>Default Color:</label>
             <input
               type="color"
-              value={arrowOptions.color}
-              onChange={(e) =>
-                setarrowOptions({ ...arrowOptions, color: e.target.value })
-              }
-            />
-          </div>
-          <div>
-            <label>Secondary Color:</label>
-            <input
-              type="color"
-              value={arrowOptions.secondaryColor}
+              value={arrowOptions.colors?.default}
               onChange={(e) =>
                 setarrowOptions({
                   ...arrowOptions,
-                  secondaryColor: e.target.value,
+                  colors: { ...arrowOptions.colors, default: e.target.value },
                 })
               }
             />
           </div>
           <div>
-            <label>Tertiary Color:</label>
+            <label>Shift Color:</label>
             <input
               type="color"
-              value={arrowOptions.tertiaryColor}
+              value={arrowOptions.colors?.shift}
               onChange={(e) =>
                 setarrowOptions({
                   ...arrowOptions,
-                  tertiaryColor: e.target.value,
+                  colors: { ...arrowOptions.colors, shift: e.target.value },
+                })
+              }
+            />
+          </div>
+          <div>
+            <label>Ctrl Color:</label>
+            <input
+              type="color"
+              value={arrowOptions.colors?.ctrl}
+              onChange={(e) =>
+                setarrowOptions({
+                  ...arrowOptions,
+                  colors: { ...arrowOptions.colors, ctrl: e.target.value },
+                })
+              }
+            />
+          </div>
+          <div>
+            <label>Alt Color:</label>
+            <input
+              type="color"
+              value={arrowOptions.colors?.alt}
+              onChange={(e) =>
+                setarrowOptions({
+                  ...arrowOptions,
+                  colors: { ...arrowOptions.colors, alt: e.target.value },
+                })
+              }
+            />
+          </div>
+          <div>
+            <label>Meta Color:</label>
+            <input
+              type="color"
+              value={arrowOptions.colors?.meta}
+              onChange={(e) =>
+                setarrowOptions({
+                  ...arrowOptions,
+                  colors: { ...arrowOptions.colors, meta: e.target.value },
                 })
               }
             />

@@ -119,12 +119,22 @@ type ContextType = {
   setNewArrowStartSquare: (square: string | null) => void;
   setNewArrowOverSquare: (
     square: string | null,
-    modifiers?: { shiftKey: boolean; ctrlKey: boolean },
+    modifiers?: {
+      shiftKey: boolean;
+      ctrlKey: boolean;
+      altKey?: boolean;
+      metaKey?: boolean;
+    },
   ) => void;
   internalArrows: Arrow[];
   drawArrow: (
     newArrowEndSquare: string,
-    modifiers?: { shiftKey: boolean; ctrlKey: boolean },
+    modifiers?: {
+      shiftKey: boolean;
+      ctrlKey: boolean;
+      altKey?: boolean;
+      metaKey?: boolean;
+    },
   ) => void;
   clearArrows: () => void;
 };
@@ -462,7 +472,12 @@ export function ChessboardProvider({
   const drawArrow = useCallback(
     (
       newArrowEndSquare: string,
-      modifiers?: { shiftKey: boolean; ctrlKey: boolean },
+      modifiers?: {
+        shiftKey: boolean;
+        ctrlKey: boolean;
+        altKey?: boolean;
+        metaKey?: boolean;
+      },
     ) => {
       if (!allowDrawingArrows) {
         return;
@@ -488,11 +503,25 @@ export function ChessboardProvider({
 
       // new arrow with different start and end square, add to internal arrows or remove if it already exists
       if (newArrowStartSquare && newArrowStartSquare !== newArrowEndSquare) {
-        const arrowColor = modifiers?.shiftKey
-          ? arrowOptions.secondaryColor
-          : modifiers?.ctrlKey
-            ? arrowOptions.tertiaryColor
-            : arrowOptions.color;
+        let arrowColor = arrowOptions.color;
+        if (arrowOptions.colors) {
+          if (modifiers?.altKey && arrowOptions.colors.alt)
+            arrowColor = arrowOptions.colors.alt;
+          else if (modifiers?.shiftKey && arrowOptions.colors.shift)
+            arrowColor = arrowOptions.colors.shift;
+          else if (modifiers?.ctrlKey && arrowOptions.colors.ctrl)
+            arrowColor = arrowOptions.colors.ctrl;
+          else if (modifiers?.metaKey && arrowOptions.colors.meta)
+            arrowColor = arrowOptions.colors.meta;
+          else arrowColor = arrowOptions.colors.default || arrowOptions.color;
+        } else {
+          // TODO: remove support for legacy arrow color props in future breaking version
+          arrowColor = modifiers?.shiftKey
+            ? arrowOptions.secondaryColor
+            : modifiers?.ctrlKey
+              ? arrowOptions.tertiaryColor
+              : arrowOptions.color;
+        }
 
         setInternalArrows((prevArrows) =>
           arrowExistsIndex === -1
@@ -513,6 +542,7 @@ export function ChessboardProvider({
     [
       allowDrawingArrows,
       arrows,
+      // TODO : remove support for legacy arrow color props in future breaking version
       arrowOptions.color,
       arrowOptions.secondaryColor,
       arrowOptions.tertiaryColor,
@@ -533,13 +563,33 @@ export function ChessboardProvider({
   const setNewArrowOverSquareWithModifiers = useCallback(
     (
       square: string | null,
-      modifiers?: { shiftKey: boolean; ctrlKey: boolean },
-    ) => {
-      const color = modifiers?.shiftKey
-        ? arrowOptions.secondaryColor
-        : modifiers?.ctrlKey
-          ? arrowOptions.tertiaryColor
-          : arrowOptions.color;
+      modifiers?: {
+        shiftKey: boolean;
+        ctrlKey: boolean;
+        altKey?: boolean;
+        metaKey?: boolean;
+      },
+      ) => {
+      // TODO: remove support for legacy arrow color props in future breaking version
+      let color = arrowOptions.color;
+      if (arrowOptions.colors) {
+        if (modifiers?.altKey && arrowOptions.colors.alt)
+          color = arrowOptions.colors.alt;
+        else if (modifiers?.shiftKey && arrowOptions.colors.shift)
+          color = arrowOptions.colors.shift;
+        else if (modifiers?.ctrlKey && arrowOptions.colors.ctrl)
+          color = arrowOptions.colors.ctrl;
+        else if (modifiers?.metaKey && arrowOptions.colors.meta)
+          color = arrowOptions.colors.meta;
+        else color = arrowOptions.colors.default || arrowOptions.color;
+      } else {
+        // TODO: remove support for legacy arrow color props in future breaking version
+        color = modifiers?.shiftKey
+          ? arrowOptions.secondaryColor
+          : modifiers?.ctrlKey
+            ? arrowOptions.tertiaryColor
+            : arrowOptions.color;
+      }
       if (square) {
         setNewArrowOverSquare({ square, color });
       } else {
